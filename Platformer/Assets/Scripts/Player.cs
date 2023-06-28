@@ -7,33 +7,26 @@ using UnityEngine;
 public class Player: MonoBehaviour
 { 
     public Sprite monochrome_tilemap_packed_240;
-    private float x;
-    private float y;
+    private float x = 0;
+    private float y = 0;
  
-    public float moveSpeed = 1;
+    public float moveSpeed = 100;
 
-    public void CreatePlayer(float x, float y)
+    public void CreatePlayer(float Spawnx, float Spawny)
     {
-        GetComponent<SpriteRenderer>().sprite = monochrome_tilemap_packed_240;
-        Instantiate(gameObject, new Vector3(0, 0, -1), Quaternion.identity);
-        gameObject.transform.position = new Vector3(x, y, -1.0f);
+        x=Spawnx; y=Spawny;
+        gameObject.GetComponent<SpriteRenderer>().sprite = monochrome_tilemap_packed_240;
+        Instantiate(gameObject, new Vector3(x, y, 0), Quaternion.identity);
     }
-    public bool Move()
+    public void Move()
     {
-        if (Input.GetKey("d"))
-        {
-            x += moveSpeed;
-            this.transform.position = new Vector3(x, y, 0);
-            return true;
-        }
-        if (Input.GetKey("a"))
-        {
-            x -= moveSpeed;
-            this.transform.position = new Vector3(x, y, 0);
-            return true;
-        }
+        //get the Input from Horizontal axis
+        float horizontalInput = Input.GetAxis("Horizontal");
 
+        //update the position
+        transform.position += new Vector3(horizontalInput * moveSpeed * Time.deltaTime, 0, 0);
 
-        return false;
+        //output to log the position change
+        Debug.Log(transform.position);
     }
 }
