@@ -320,9 +320,10 @@ GameObject:
   - component: {fileID: 603732594}
   - component: {fileID: 603732593}
   - component: {fileID: 603732592}
+  - component: {fileID: 603732595}
   m_Layer: 0
   m_Name: tilemap_collision
-  m_TagString: Untagged
+  m_TagString: tilemap_collision
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -653,6 +654,19 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &603732595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 603732590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec92db27c918615409b72086dfebbe14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tm_coll: {fileID: 603732590}
 --- !u!1 &2010640037
 GameObject:
   m_ObjectHideFlags: 0
