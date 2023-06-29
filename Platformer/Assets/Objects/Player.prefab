@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 8241779831386274787}
   - component: {fileID: 3456969296511031758}
   - component: {fileID: 1676103231867793411}
+  - component: {fileID: 2866451755614567062}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,6 +102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pl1: {fileID: 0}
   myRigidBody: {fileID: 0}
+  animator: {fileID: 2866451755614567062}
   monochrome_tilemap_packed_240: {fileID: 361278763, guid: a6eb5b547e8fa9947ba394f116b4d26a, type: 3}
   jumpHeight: 3
   moveSpeed: 1
@@ -175,4 +177,25 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
+--- !u!95 &2866451755614567062
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6108987969990348477}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f01d3d9eb4badde419d94eaa179f3231, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

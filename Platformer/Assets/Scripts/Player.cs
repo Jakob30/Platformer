@@ -7,8 +7,8 @@ using UnityEngine.Tilemaps;
 public class Player: MonoBehaviour
 {
     public GameObject pl1;
-    public GameObject tile_collision;
     public Rigidbody2D myRigidBody;
+    public Animator animator;
     public Sprite monochrome_tilemap_packed_240;
     private float x = 0;
     private float y = 0;
@@ -18,34 +18,48 @@ public class Player: MonoBehaviour
 
     public void CreatePlayer(float Spawnx, float Spawny)
     {
-        tile_collision = GameObject.FindGameObjectWithTag("tilemap_collision");
-        Floor tiles = tile_collision.GetComponent<Floor>();
-        x=Spawnx; y=Spawny;
+        pl1 = GameObject.FindGameObjectWithTag("Player");
+        x = Spawnx; y = Spawny;
         gameObject.GetComponent<SpriteRenderer>().sprite = monochrome_tilemap_packed_240;
         pl1 = Instantiate(gameObject, new Vector3(x, y, 0), Quaternion.identity);
+        Player pl1Script = pl1.GetComponent<Player>();
+        pl1Script.isOnGround = true;
         myRigidBody = pl1.GetComponent<Player>().GetComponent<Rigidbody2D>();
+    }
+
+    public void Jump()
+     {
+        Player pl1Script = pl1.GetComponent<Player>();
+        bool isJumpInput = Input.GetKeyDown("space");
+         if (isJumpInput && pl1Script.isOnGround)
+        {
+            myRigidBody.velocity = new Vector3(0, jumpHeight, 0);
+            pl1Script.isOnGround = false;
+        }
     }
     public void Move()
     {
         //get the Input from Horizontal axis
         float horizontalInput = Input.GetAxis("Horizontal");
-        bool isJumpInput = Input.GetKeyDown("space");
-        if (isJumpInput && isOnGround)
-        {
-            myRigidBody.velocity = new Vector3(0, jumpHeight, 0);
-            isOnGround = false;
-        }
+        Player pl1Script = pl1.GetComponent<Player>();
+        pl1Script.animator.SetFloat("Speed", horizontalInput * moveSpeed * Time.deltaTime);
         //update the position
         pl1.transform.position += new Vector3(horizontalInput * moveSpeed * Time.deltaTime,0, 0);
-
-        //output to log the position change
-        Debug.Log(transform.position);
     }
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.name == tiles.GetComponent<TilemapCollider2D>())
+        Debug.Log("collision");
+        if (collision.gameObject.tag == "tilemap_collision")
         {
-            isOnGround= true;
+            isOnGround = true;
         }
+    }
+    public bool getIsOnGround()
+    {
+        return isOnGround;
+    }
+    public void setIsOnGround(bool pIsOnGround)
+    {
+        isOnGround = pIsOnGround;
     }
 }

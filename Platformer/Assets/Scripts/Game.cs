@@ -18,5 +18,6 @@ public class Game : MonoBehaviour
     void Update()
     {
         player.GetComponent<Player>().Move();
+        player.GetComponent<Player>().Jump();
     }
 }
