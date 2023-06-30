@@ -24,6 +24,7 @@ public class Player: MonoBehaviour
         pl1 = Instantiate(gameObject, new Vector3(x, y, 0), Quaternion.identity);
         Player pl1Script = pl1.GetComponent<Player>();
         pl1Script.isOnGround = true;
+        pl1Script.animator.SetBool("isOnGround", pl1Script.isOnGround);
         myRigidBody = pl1.GetComponent<Player>().GetComponent<Rigidbody2D>();
     }
 
@@ -31,10 +32,11 @@ public class Player: MonoBehaviour
      {
         Player pl1Script = pl1.GetComponent<Player>();
         bool isJumpInput = Input.GetKeyDown("space");
-         if (isJumpInput && pl1Script.isOnGround)
+        if (isJumpInput && pl1Script.isOnGround)
         {
             myRigidBody.velocity = new Vector3(0, jumpHeight, 0);
             pl1Script.isOnGround = false;
+            pl1Script.animator.SetBool("isOnGround", pl1Script.isOnGround);
         }
     }
     public void Move()
@@ -43,6 +45,7 @@ public class Player: MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         Player pl1Script = pl1.GetComponent<Player>();
         pl1Script.animator.SetFloat("Speed", horizontalInput * moveSpeed * Time.deltaTime);
+        
         //update the position
         pl1.transform.position += new Vector3(horizontalInput * moveSpeed * Time.deltaTime,0, 0);
     }
@@ -52,6 +55,7 @@ public class Player: MonoBehaviour
         if (collision.gameObject.tag == "tilemap_collision")
         {
             isOnGround = true;
+            animator.SetBool("isOnGround", isOnGround);
         }
     }
     public bool getIsOnGround()
