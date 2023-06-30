@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 186006083}
   m_Layer: 0
   m_Name: Controller
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f614ea262e9af74dbca2794ac6605f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 6108987969990348477, guid: b74ce68a6ed8b24439d662bde0a4cdd5, type: 3}
+  playerPrefab: {fileID: 6108987969990348477, guid: b74ce68a6ed8b24439d662bde0a4cdd5, type: 3}
   SpawnX: -3
   SpawnY: 0
 --- !u!4 &186006084

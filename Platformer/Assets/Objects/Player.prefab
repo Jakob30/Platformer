@@ -29,8 +29,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6108987969990348477}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -1749.768, y: 0, z: -1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 361278763, guid: a6eb5b547e8fa9947ba394f116b4d26a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d8c86b9375d5b9143ba7101bc4045d3f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -100,12 +100,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d33b3771c5e4c74697a3a216dec24be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pl1: {fileID: 0}
-  myRigidBody: {fileID: 0}
+  myRigidBody: {fileID: 1676103231867793411}
   animator: {fileID: 2866451755614567062}
-  monochrome_tilemap_packed_240: {fileID: 361278763, guid: a6eb5b547e8fa9947ba394f116b4d26a, type: 3}
-  jumpHeight: 3
   moveSpeed: 1
+  jumpHeight: 3
 --- !u!61 &3456969296511031758
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -140,7 +138,7 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.02, y: 0, z: 0.02, w: 0.049999997}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.16, y: 0.16}
     newSize: {x: 0.16, y: 0.16}

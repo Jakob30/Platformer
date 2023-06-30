@@ -4,20 +4,31 @@ using UnityEngine;
 
 public class Game : MonoBehaviour
 {
-    public GameObject player;
+    public GameObject playerPrefab;
+    private GameObject playerInstance;
+    private Player pl1;
     
     public float SpawnX = 0;
     public float SpawnY = 0;
     // Start is called before the first frame update
     void Start()
     {
-        player.GetComponent<Player>().CreatePlayer(SpawnX, SpawnY);
+        CreatePlayer(SpawnX, SpawnY);
     }
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        player.GetComponent<Player>().Move();
-        player.GetComponent<Player>().Jump();
+        PlayerMove();
+    }
+    public void PlayerMove()
+    {
+        if (pl1!= null)
+        {
+            pl1.Movement();
+        }
+    }
+    public void CreatePlayer(float spawnX, float spawnY)
+    {
+        playerInstance = Instantiate(playerPrefab, new Vector3(spawnX, spawnY, 0), Quaternion.identity);
+        pl1 = playerInstance.GetComponent<Player>();
     }
 }
