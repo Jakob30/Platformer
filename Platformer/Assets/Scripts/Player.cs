@@ -9,28 +9,34 @@ public class Player: MonoBehaviour
 {
     public Rigidbody2D myRigidBody;
     public Animator animator;
+    
 
     public float moveSpeed = 100;
     public float jumpHeight = 0;
     private bool isJumping = false;
-    private float actMoveSpeed;
+
     public void Jump()
      {
         isJumping = true;
-        animator.SetBool("isOnGround", isJumping);
+        animator.SetBool("isJumping", isJumping);
         myRigidBody.velocity =  new Vector3(0, jumpHeight, 0);
     }
     public void Move(float horizontalInput)
     {
         //get the Input from Horizontal axis
         Debug.Log("move");
-        transform.position += new Vector3(horizontalInput * moveSpeed * Time.deltaTime, 0, 0);
+        
         if (horizontalInput < 0)
         {
-            MirrorAlongXAxis();
+            transform.localScale = new Vector3(-1, 1, 1);
+            //animator.SetBool("left", true);
         }
-        animator.SetFloat("Speed", horizontalInput * moveSpeed * Time.deltaTime);
-        actMoveSpeed = Mathf.Abs(horizontalInput * moveSpeed * Time.deltaTime);
+        else if(horizontalInput > 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        transform.position += new Vector3(horizontalInput * moveSpeed * Time.deltaTime, 0, 0);
+        animator.SetFloat("Speed", Mathf.Abs(horizontalInput * moveSpeed));
         //update the position
     }
 
@@ -42,10 +48,6 @@ public class Player: MonoBehaviour
         {
             isJumping = false;
             animator.SetBool("isJumping", isJumping);
-            if (actMoveSpeed > 0)
-                animator.SetBool("is!JumpingandRunning", true);
-            else
-                animator.SetBool("is!JumpingandRunning", false);
         }
         else if (collision.gameObject.CompareTag("Wall"))
         {
@@ -66,16 +68,13 @@ public class Player: MonoBehaviour
         {
             Move(horizontalInput);
         }
+        else
+        {
+            animator.SetFloat("Speed", 0);
+        }
         if (isJumpingInput && !isJumping)
         {
             Jump();
         }
-    }
-    
-    public void MirrorAlongXAxis()
-    {
-        Vector3 scale = transform.localScale;
-        scale.x = -scale.x;
-        transform.localScale = scale;
     }
 }
