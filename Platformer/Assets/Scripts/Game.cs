@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Game : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Game : MonoBehaviour
     
     public float SpawnX = 0;
     public float SpawnY = 0;
+    private bool isGameOver = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +20,10 @@ public class Game : MonoBehaviour
     private void Update()
     {
         PlayerMove();
+        if (pl1.transform.position.y < -2)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
     public void PlayerMove()
     {
@@ -30,5 +36,10 @@ public class Game : MonoBehaviour
     {
         playerInstance = Instantiate(playerPrefab, new Vector3(spawnX, spawnY, 0), Quaternion.identity);
         pl1 = playerInstance.GetComponent<Player>();
+    }
+
+    public void Retry()
+    {
+ 
     }
 }
