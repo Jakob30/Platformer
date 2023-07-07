@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.Overlays;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
@@ -14,7 +16,8 @@ public class Player : MonoBehaviour
     public float raycast_distance = 0.01f;
     public float moveSpeed = 100;
     public float jumpHeight = 0;
-    public float slideSpeed = 10;
+    public float slide_force = 10;
+  
 
     private bool isJumping = false;
     private bool wall_collide = false;
@@ -26,12 +29,14 @@ public class Player : MonoBehaviour
         isJumping = true;
         animator.SetBool("isJumping", isJumping);
         myRigidBody.velocity = new Vector3(0, jumpHeight, 0);
+        Debug.Log("jump");
     }
     public void Move(float horizontalInput)
     {
         float movement_horizontal = horizontalInput * moveSpeed * Time.deltaTime;
         transform.Translate(new Vector3(movement_horizontal, 0, 0));
         animator.SetFloat("Speed", Mathf.Abs(horizontalInput * moveSpeed));
+        
         //update the position
     }
 
@@ -50,30 +55,16 @@ public class Player : MonoBehaviour
             animator.SetBool("isJumping", isJumping);
             Debug.Log("Floor");
         }
-        else if (rightDot > 0.9f || leftDot > 0.9f)
-        {
-            if (rightDot > 0.9f) { wall = dir.left; }
-            else { wall = dir.right; }
-            wall_collide = true;
-            ApplySlideEffect();
-            Debug.Log("Slide");
-        }
     }
 
-    //private void OnCollisionExit2D(Collision2D collision)
-    //{
-    //    Vector2 collisionNormal = collision.contacts[0].normal.normalized;
-    //    float rightDot = Vector2.Dot(collisionNormal, Vector2.right);
-    //    float leftDot = Vector2.Dot(collisionNormal, Vector2.left);
-    //    if (rightDot > 0.9f || leftDot > 0.9f)
-    //    {
-    //        wall_collide = false;
-    //    }
-    //}
 
     public void ApplySlideEffect()
     {
-        transform.position += new Vector3(0, slideSpeed * Time.deltaTime, 0);
+        myRigidBody.velocity = new Vector2(0, -slide_force * myRigidBody.gravityScale);
+        Debug.Log("Slide");
+        isJumping = false;
+        //myRigidBody.AddForce(Vector2.down * slide_force, ForceMode2D.Force);
+        
     }
 
     public void Movement()
@@ -81,7 +72,8 @@ public class Player : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         bool isJumpingInput = Input.GetKeyDown("space");
         dir dir_current = dir.nodir;
-        Debug.Log(wall_collide);
+
+
         if (horizontalInput < 0)
         {
             dir_current = dir.left;
@@ -94,16 +86,28 @@ public class Player : MonoBehaviour
             transform.localScale = new Vector3(1, 1, 1);
         }
 
-        if(horizontalInput != 0)
+
+        if (isJumpingInput && !isJumping)
         {
-            if (wall_collide)
+            Jump();
+        }
+
+        if (horizontalInput != 0)
+        {
+            if (check_collide() && !isJumpingInput)
             {
-                horizontalInput = 0;
-                if (dir_current != wall)
+                if (dir_current == dir.right && is_colliding_with_wall(Vector2.right))
                 {
-                    wall_collide = false;
+                    ApplySlideEffect();
+                    horizontalInput = 0;
+                }
+                else if (dir_current == dir.left && is_colliding_with_wall(Vector2.left))
+                {
+                    horizontalInput = 0;
+                    ApplySlideEffect();
                 }
             }
+
             Move(horizontalInput);
         }
         else
@@ -111,36 +115,28 @@ public class Player : MonoBehaviour
             animator.SetFloat("Speed", 0);
         }
 
-        if (isJumpingInput && !isJumping)
-        {
-            Jump();
-        }
 
         //if (wall_collide)
         //{
            
         //}
     }
-    //private bool CheckWallCollision()
-    //{
+    private bool check_collide()
+    {
+        return is_colliding_with_wall(Vector2.left) || is_colliding_with_wall(Vector2.right);
+    }
+    private bool is_colliding_with_wall(Vector2 direction)
+    {
 
-    //    int character_layer = gameObject.layer;
-    //    int layer_mask = ~(1<<character_layer);
+        int character_layer = gameObject.layer;
+        int layer_mask = ~(1 << character_layer);
 
-    //    RaycastHit2D[] hit_right = new RaycastHit2D[1];
-    //    RaycastHit2D[] hit_left = new RaycastHit2D[1];
-    //    // Cast rays to detect collision with walls
-    //    // You can modify this code depending on your specific collider setup
-    //     Physics2D.RaycastNonAlloc(transform.position, Vector2.left, hit_left, raycast_distance, layer_mask);
-    //     Physics2D.RaycastNonAlloc(transform.position, Vector2.right, hit_right, raycast_distance, layer_mask);
+        RaycastHit2D[] hit = new RaycastHit2D[1];
 
-    //    // Check if any of the raycasts hit a wall collider
-    //    if (hit_left[0].collider != null || hit_right[0].collider != null)
-    //    {
-    //        return true; // Colliding with a wall
-    //    }
+        Physics2D.RaycastNonAlloc(transform.position, direction, hit, raycast_distance, layer_mask);
 
-    //    return false; // Not colliding with a wall
-    //}
-    
+        // Check if any of the raycasts hit a wall collider
+        return hit[0].collider != null;
+    }
+
 }

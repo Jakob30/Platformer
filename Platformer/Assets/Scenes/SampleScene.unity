@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 268271140}
   - component: {fileID: 268271145}
   - component: {fileID: 268271144}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -1589,7 +1589,7 @@ GameObject:
   - component: {fileID: 603732595}
   - component: {fileID: 603732597}
   - component: {fileID: 603732596}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: tilemap_collision
   m_TagString: Floor
   m_Icon: {fileID: 0}

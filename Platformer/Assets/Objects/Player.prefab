@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3456969296511031758}
   - component: {fileID: 1676103231867793411}
   - component: {fileID: 2866451755614567062}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -102,10 +102,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myRigidBody: {fileID: 1676103231867793411}
   animator: {fileID: 2866451755614567062}
-  raycast_distance: 0.2
-  moveSpeed: 2
-  jumpHeight: 5
-  slideSpeed: 0.5
+  raycast_distance: 0.1
+  moveSpeed: 1.6
+  jumpHeight: 4
+  slide_force: 0.3
 --- !u!61 &3456969296511031758
 BoxCollider2D:
   m_ObjectHideFlags: 0
